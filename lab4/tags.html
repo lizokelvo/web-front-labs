@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ворошилова Елизавета Андреевна. Лабораторная 4</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-16x16.png">
+    <link rel="icon" href="../favicon-32x32.png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tag-cloud {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .tag {
+            position: absolute;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: bold;
+            animation: float 10s infinite;
+        }
+
+        .tag:hover {
+            animation-play-state: paused;
+            transform: scale(2.5) !important;
+            text-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        /* Индивидуальные стили для каждого тега */
+        .tag1 { color:rgb(18, 101, 54); font-size: 24px; }
+        .tag2 { color:rgb(121, 105, 158); font-size: 36px; }
+        .tag3 { color:rgb(51, 255, 109); font-size: 30px; }
+        .tag4 { color:rgb(223, 59, 235); font-size: 28px; }
+        .tag5 { color:rgb(0, 255, 242); font-size: 34px; }
+        .tag6 { color:rgb(245, 147, 240); font-size: 32px; }
+        .tag7 { color:rgb(236, 122, 122); font-size: 38px; }
+        .tag8 { color:rgb(255, 71, 157); font-size: 36px; }
+        .tag9 { color:rgb(0, 32, 238); font-size: 40px; }
+        .tag10 { color:rgb(113, 170, 0); font-size: 38px; }
+        .tag11 { color:rgb(170, 87, 57); font-size: 42px; }
+        .tag12 { color:rgb(239, 34, 232); font-size: 40px; }
+        .tag13 { color:rgb(62, 216, 57); font-size: 44px; }
+        .tag14 { color: #DC143C; font-size: 46px; }
+        .tag15 { color: #20B2AA; font-size: 48px; }
+        .tag16 { color: #FFD700; font-size: 32px; }
+        .tag17 { color: #ADFF2F; font-size: 34px; }
+        .tag18 { color: #FF69B4; font-size: 36px; }
+        .tag19 { color: #CD5C5C; font-size: 38px; }
+        .tag20 { color: #8B4513; font-size: 40px; }
+        .tag21 { color: #1E90FF; font-size: 42px; }
+        .tag22 { color: #D2691E; font-size: 44px; }
+        .tag23 { color: #FF1493; font-size: 46px; }
+        .tag24 { color:rgb(82, 149, 171); font-size: 48px; }
+        .tag25 { color:rgb(83, 66, 187); font-size: 50px; }
+
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(10px, -10px); }
+            100% { transform: translate(0, 0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная работа 4
+        <hr>
+    </header>
+    <div class="tag-cloud">
+        <span class="tag tag1">JavaScript</span>
+        <span class="tag tag2">Python</span>
+        <span class="tag tag3">HTML</span>
+        <span class="tag tag4">CSS</span>
+        <span class="tag tag5">Java</span>
+        <span class="tag tag6">C++</span>
+        <span class="tag tag7">PHP</span>
+        <span class="tag tag8">SQL</span>
+        <span class="tag tag9">React</span>
+        <span class="tag tag10">Vue.js</span>
+        <span class="tag tag11">Node.js</span>
+        <span class="tag tag12">Django</span>
+        <span class="tag tag13">Git</span>
+        <span class="tag tag14">Docker</span>
+        <span class="tag tag15">Machine Learning</span>
+        <span class="tag tag16">Angular</span>
+        <span class="tag tag17">Ruby</span>
+        <span class="tag tag18">TypeScript</span>
+        <span class="tag tag19">Kubernetes</span>
+        <span class="tag tag20">MongoDB</span>
+        <span class="tag tag21">Flask</span>
+        <span class="tag tag22">Swift</span>
+        <span class="tag tag23">Kotlin</span>
+        <span class="tag tag24">Go</span>
+        <span class="tag tag25">Rust</span>
+    </div>
+
+    <footer>
+        <hr>
+        &copy; Ворошилова Елизавета, ФБИ-34, 2 курс, 2025
+    </footer>
+
+    <script>
+        document.querySelectorAll('.tag').forEach(tag => {
+            const initialTop = Math.random() * 90 + 5;
+            const initialLeft = Math.random() * 90 + 5;
+            tag.style.top = initialTop + '%';
+            tag.style.left = initialLeft + '%';
+
+            tag.addEventListener('mouseenter', () => {
+                tag.style.animationPlayState = 'paused';
+            });
+
+            tag.addEventListener('mouseleave', () => {
+                tag.style.animationPlayState = 'running';
+            });
+        });
+    </script>
+</body>
+</html>
