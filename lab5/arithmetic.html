@@ -131,6 +131,16 @@
             let hello = 'Приветствую вас на моей странице!\nРада вас видеть!';
             alert(hello);
         }
+        function changeOutput(buttonNum, backColor, textColor, borderType, borderRadius, borderWidth, textAlign) {
+            let output = document.getElementById('output');
+            output.innerHTML = 'Нажата кнопка ' + buttonNum;
+            output.style.backgroundColor = backColor;
+            output.style.color = textColor;
+            output.style.borderType = borderType;
+            output.style.borderRadius = borderRadius;
+            output.style.borderWidth = borderWidth;
+            output.style.textAlign = textAlign;
+        }
     </script>
     <style>
         .message {
@@ -149,6 +159,11 @@
         footer {
             cursor: pointer;
         }
+        #output {
+            border: 1px solid;
+            width: 300px;
+            height: 40px;
+        }
     </style>
 </head>
 <body>
@@ -165,6 +180,13 @@
         <div class="message" onclick="showMult()">Найти произведение чисел</div>
         <div class="message" onclick="showDiv()">Найти отношение чисел</div>
         <div class="message" onclick="showDeg()">Возвести в степень</div>
+        <div>
+            <input type="button" value="Кнопка 1" onclick="changeOutput(1, 'red', 'yellow', 'solid', '50%', '4px', 'center')">
+            <input type="button" value="Кнопка 2" onclick="changeOutput(2, 'black', 'lime', 'dashed', '25%', '10px', 'center')">
+            <input type="button" value="Кнопка 3" onclick="changeOutput(3, 'blue', 'purple', 'dotted', '45%', '12px', 'center')">
+            <input type="button" value="Кнопка 4" onclick="changeOutput(4, 'orange', 'pink', 'double', '65%', '5px', 'center')">
+        </div>
+        <div id="output"></div>
     </main>
 
     <footer ondblclick="showHello()">
