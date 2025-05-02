@@ -13,6 +13,11 @@
             document.getElementById('blurOutput').innerText = value;
             document.getElementById('blurImage').style.filter = 'blur(' + value + ')';
         }
+        function updateFilter() {
+            let value = document.getElementById('brightnessValue').value + '%';
+            document.getElementById('brightnessOutput').innerText = value;
+            document.getElementById('brightnessImage').style.filter = 'brightness(' + value + ')';
+        }
     </script>
 </head>
 <body>
@@ -27,6 +32,13 @@
             <span id="blurOutput"></span>
         </div>
         <div><img src="lab5img.webp" id="blurImage"></div>
+
+        <div class="filter-control">
+            Яркость brightness:
+            <input type="range" min="0" max="500" value="100%" oninput="updateFilter('brightness', this.value, '%')" id="brightnessValue">
+            <span id="brightnessOutput"></span>
+        </div>
+        <div><img src="lab5img.webp" id="brightnessImage"></div>
     </main>
 
     <footer>
