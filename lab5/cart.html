@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина товаров</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
+    <script> 
+        document.addEventListener('DOMContentLoaded', function() {
+        const calculateBtn = document.getElementById('calculate');
+        const clearBtn = document.getElementById('clear');
+        const totalElement = document.getElementById('total');    
+        const prices = {
+            apples: 100,
+            pears: 80,
+            oranges: 150,
+            melons: 300,
+            bananas: 60
+        };
+        function validateInput(input) {
+            const value = parseInt(input.value);
+            if (isNaN(value)) {
+                showError(input, 'Введите числовое значение');
+                return false;
+            }
+            if (value < 0) {
+                showError(input, 'Значение не может быть отрицательным');
+                return false;
+            }
+            clearError(input);
+            return true;
+        }
+        function showError(input, message) {
+            input.style.color = 'red';
+            input.style.borderColor = 'red';
+            alert(message);
+            input.focus();
+            input.select();
+        }
+        function clearError(input) {
+            input.style.color = '';
+            input.style.borderColor = '';
+        }
+        calculateBtn.addEventListener('click', function() {
+            let allValid = true;
+            let total = 0;
+            
+            for (const product in prices) {
+                const input = document.getElementById(product);
+                if (!validateInput(input)) {
+                    allValid = false;
+                    continue;
+                }
+                const quantity = parseInt(input.value) || 0;
+                total += quantity * prices[product];
+            }
+            
+            if (allValid) {
+                totalElement.textContent = `Общая цена: ${total} р`;
+                totalElement.style.backgroundColor = '#e8f5e9';
+                totalElement.style.color = '#2c3e50';
+                totalElement.style.border = '2px solid #4CAF50';
+                totalElement.style.borderRadius = '8px';
+                totalElement.style.padding = '10px';
+                totalElement.style.textAlign = 'center';
+            }
+        });
+        clearBtn.addEventListener('click', function() {
+            for (const product in prices) {
+                const input = document.getElementById(product);
+                input.value = '';
+                clearError(input);
+            }
+            totalElement.textContent = '';
+            totalElement.style = '';
+        });
+        
+        // Приветственное сообщение
+        function showWelcome() {
+            const welcome = 'Добро пожаловать в наш магазин!\nЗдесь вы можете рассчитать стоимость ваших покупок.';
+            alert(welcome);
+        }
+        
+        // Информация об авторе
+        function showAuthor() {
+            const author = 'Автор страницы:\nВаше Имя';
+            alert(author);
+        }
+        
+        // Инициализация
+        showWelcome();
+    });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cart-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .product {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #clear {
+            background-color: #f44336;
+        }
+
+        #clear:hover {
+            background-color: #d32f2f;
+        }
+
+        .total-price {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Корзина товаров
+    </header>
+
+    <main>
+        <div class="cart-container">
+            <div class="product">
+                <label for="apples">Яблоки (100р/шт):</label>
+                <input type="number" id="apples" min="0" placeholder="сколько яблок надо?">
+            </div>
+            
+            <div class="product">
+                <label for="pears">Груши (80р/шт):</label>
+                <input type="number" id="pears" min="0" placeholder="введите количество груш">
+            </div>
+            
+            <div class="product">
+                <label for="oranges">Апельсины (150р/шт):</label>
+                <input type="number" id="oranges" min="0" placeholder="сколько апельсинов?">
+            </div>
+            
+            <div class="product">
+                <label for="melons">Дыни (300р/шт):</label>
+                <input type="number" id="melons" min="0" placeholder="количество дынь">
+            </div>
+            
+            <div class="product">
+                <label for="bananas">Бананы (60р/шт):</label>
+                <input type="number" id="bananas" min="0" placeholder="сколько бананов?">
+            </div>
+            
+            <div class="buttons">
+                <button id="calculate">Рассчитать</button>
+                <button id="clear">Очистить</button>
+            </div>
+            
+            <div id="total" class="total-price"></div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2023 Магазин фруктов
+    </footer>
+</body>
+</html>
