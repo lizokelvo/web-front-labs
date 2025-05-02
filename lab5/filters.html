@@ -8,16 +8,39 @@
     <link rel="shortcut icon" href="favicon-16x16.png">
     <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
     <script>
-        function blurChange() {
-            let value = document.getElementById('blurValue').value + 'px';
-            document.getElementById('blurOutput').innerText = value;
-            document.getElementById('blurImage').style.filter = 'blur(' + value + ')';
-        }
-        function updateFilter() {
-            let value = document.getElementById('brightnessValue').value + '%';
-            document.getElementById('brightnessOutput').innerText = value;
-            document.getElementById('brightnessImage').style.filter = 'brightness(' + value + ')';
-        }
+        function filterChange() {
+                let blurValue = document.getElementById('blurValue').value + 'px';
+                document.getElementById('blurOutput').innerText = blurValue;
+                document.getElementById('blurImage').style.filter = 'blur(' + blurValue + ')';
+                
+                let brightnessValue = document.getElementById('brightnessValue').value + '%';
+                document.getElementById('brightnessOutput').innerText = brightnessValue;
+                document.getElementById('brightnessImage').style.filter = 'brightness(' + brightnessValue + ')';
+                
+                let contrastValue = document.getElementById('contrastValue').value + '%';
+                document.getElementById('contrastOutput').innerText = contrastValue;
+                document.getElementById('contrastImage').style.filter = 'contrast(' + contrastValue + ')';
+                
+                let grayscaleValue = document.getElementById('grayscaleValue').value + '%';
+                document.getElementById('grayscaleOutput').innerText = grayscaleValue;
+                document.getElementById('grayscaleImage').style.filter = 'grayscale(' + grayscaleValue + ')';
+                
+                let hueRotateValue = document.getElementById('hueRotateValue').value + 'deg';
+                document.getElementById('hueRotateOutput').innerText = hueRotateValue;
+                document.getElementById('hueRotateImage').style.filter = 'hue-rotate(' + hueRotateValue + ')';
+                
+                let invertValue = document.getElementById('invertValue').value + '%';
+                document.getElementById('invertOutput').innerText = invertValue;
+                document.getElementById('invertImage').style.filter = 'invert(' + invertValue + ')';
+                
+                let saturateValue = document.getElementById('saturateValue').value + '%';
+                document.getElementById('saturateOutput').innerText = saturateValue;
+                document.getElementById('saturateImage').style.filter = 'saturate(' + saturateValue + ')';
+                
+                let sepiaValue = document.getElementById('sepiaValue').value + '%';
+                document.getElementById('sepiaOutput').innerText = sepiaValue;
+                document.getElementById('sepiaImage').style.filter = 'sepia(' + sepiaValue + ')';
+            }
     </script>
 </head>
 <body>
@@ -26,19 +49,77 @@
     </header>
 
     <main>
-        <div>
-            Фильтр blur:
-            <input type="range" min="0" max="20" value="0" onchange="blurChange()" id="blurValue">
-            <span id="blurOutput"></span>
+        <div class="control-group">
+            <div>
+                Фильтр blur:
+                <input type="range" min="0" max="20" value="0" onchange="filterChange()" id="blurValue">
+                <span id="blurOutput">0px</span>
+            </div>
+            <div><img src="lab5img.webp" id="blurImage"></div>
         </div>
-        <div><img src="lab5img.webp" id="blurImage"></div>
 
-        <div class="filter-control">
-            Яркость brightness:
-            <input type="range" min="0" max="500" value="100%" oninput="updateFilter('brightness', this.value, '%')" id="brightnessValue">
-            <span id="brightnessOutput"></span>
+        <div class="control-group">
+            <div>
+                Фильтр brightness:
+                <input type="range" min="0" max="500" value="100" onchange="filterChange()" id="brightnessValue">
+                <span id="brightnessOutput">100%</span>
+            </div>
+            <div><img src="lab5img.webp" id="brightnessImage"></div>
         </div>
-        <div><img src="lab5img.webp" id="brightnessImage"></div>
+
+        <div class="control-group">
+            <div>
+                Фильтр contrast:
+                <input type="range" min="0" max="500" value="100" onchange="filterChange()" id="contrastValue">
+                <span id="contrastOutput">100%</span>
+            </div>
+            <div><img src="lab5img.webp" id="contrastImage"></div>
+        </div>
+
+        <div class="control-group">
+            <div>
+                Фильтр grayscale:
+                <input type="range" min="0" max="100" value="0" onchange="filterChange()" id="grayscaleValue">
+                <span id="grayscaleOutput">0%</span>
+            </div>
+            <div><img src="lab5img.webp" id="grayscaleImage"></div>
+        </div>
+
+        <div class="control-group">
+            <div>
+                Фильтр hue-rotate:
+                <input type="range" min="0" max="360" value="0" onchange="filterChange()" id="hueRotateValue">
+                <span id="hueRotateOutput">0deg</span>
+            </div>
+            <div><img src="lab5img.webp" id="hueRotateImage"></div>
+        </div>
+
+        <div class="control-group">
+            <div>
+                Фильтр invert:
+                <input type="range" min="0" max="100" value="0" onchange="filterChange()" id="invertValue">
+                <span id="invertOutput">0%</span>
+            </div>
+            <div><img src="lab5img.webp" id="invertImage"></div>
+        </div>
+
+        <div class="control-group">
+            <div>
+                Фильтр saturate:
+                <input type="range" min="0" max="500" value="100" onchange="filterChange()" id="saturateValue">
+                <span id="saturateOutput">100%</span>
+            </div>
+            <div><img src="lab5img.webp" id="saturateImage"></div>
+        </div>
+
+        <div class="control-group">
+            <div>
+                Фильтр sepia:
+                <input type="range" min="0" max="100" value="0" onchange="filterChange()" id="sepiaValue">
+                <span id="sepiaOutput">0%</span>
+            </div>
+            <div><img src="lab5img.webp" id="sepiaImage"></div>
+        </div>
     </main>
 
     <footer>
