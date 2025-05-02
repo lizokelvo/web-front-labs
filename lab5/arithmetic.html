@@ -77,6 +77,52 @@
             let result = a/b;
             alert(a + ' / ' + b + ' = ' + result);
         }
+        function showDeg() { 
+            let inputA = document.getElementById('numberA');
+            let inputB = document.getElementById('numberB');
+
+            let a = parseInt(inputA.value);
+            let b = parseInt(inputB.value);
+            if(b == 0, a == 0) {
+                alert('Ошибка');
+                inputB.focus();
+                inputB.select();
+                inputB.style.color =  'red';
+                inputB.style.borderColor = 'red';
+                inputA.focus();
+                inputA.select();
+                inputA.style.color =  'red';
+                inputA.style.borderColor = 'red';
+                return;
+            }
+
+            if(isNaN(a)) {
+                alert('Введите числовое значение в первое поле');
+                inputA.focus();
+                inputA.select();
+                inputA.style.color =  'red';
+                inputA.style.borderColor = 'red';
+                return;
+            }
+
+            if(isNaN(b)) {
+                alert('Введите числовое значение в первое поле');
+                inputB.focus();
+                inputB.select();
+                inputB.style.color =  'red';
+                inputB.style.borderColor = 'red';
+                return;
+            }
+
+            inputB.style.color =  '';
+            inputB.style.borderColor = '';
+
+            inputA.style.color =  '';
+            inputA.style.borderColor = '';
+
+            let result = a^b;
+            alert(a + ' ^ ' + b + ' = ' + result);
+        }
         function showAuthor() {
             let author = 'Автор страницы:\nВорошилова Елизавета Андреевна';
             alert(author);
@@ -118,6 +164,7 @@
         <div class="message" onclick="showDiff()">Найти разность чисел</div>
         <div class="message" onclick="showMult()">Найти произведение чисел</div>
         <div class="message" onclick="showDiv()">Найти отношение чисел</div>
+        <div class="message" onclick="showDeg()">Возвести в степень</div>
     </main>
 
     <footer ondblclick="showHello()">
