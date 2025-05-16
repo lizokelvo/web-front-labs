@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список книг</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
+    <style>
+        #bookList {
+                display: grid;
+                gap: 15px;
+            }
+            
+            .book {
+                background-color: white;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                transition: transform 0.2s;
+            }
+            
+            .book:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+            
+            .book-title {
+                font-size: 1.2em;
+                margin-bottom: 5px;
+            }
+            
+            .book-author {
+                font-weight: bold;
+                color: #2c3e50;
+            }
+            
+            .book-year {
+                color: #666;
+            }
+            
+            .book-price {
+                font-weight: bold;
+                color: #27ae60;
+                margin-top: 5px;
+            }
+            
+            .bestseller {
+                border-left: 4px solid #e74c3c;
+                padding-left: 11px;
+            }
+            
+            .bestseller-badge {
+                display: inline-block;
+                background-color: #e74c3c;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 0.8em;
+                margin-left: 10px;
+            }
+            
+            .out-of-stock {
+                opacity: 0.6;
+                position: relative;
+            }
+            
+            .out-of-stock::after {
+                content: "Нет в наличии";
+                display: inline-block;
+                background-color: #e74c3c;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 0.8em;
+                margin-left: 10px;
+            }
+    </style>
+    <script src="books.js"></script>
+    <script>
+        function showBooks() {
+          const bookList = document.getElementById('bookList');
+          bookList.innerHTML = '';
+          for(let i = 0; i < books.lenght; i++) {
+            const book = books[i];
+                let bookClass = 'book';
+                if (book.bestseller) {
+                    bookClass += ' bestseller';
+                }
+                if (!book.inStock) {
+                    bookClass += ' out-of-stock';
+                }
+            bookList.innerHTML += `<div class="${bookClass}">
+                        <div class="book-title">
+                            <span class="book-author">${book.author}.</span>
+                            <i>${book.name}</i>
+                            ${book.bestseller ? '<span class="bestseller-badge">Бестселлер</span>' : ''}
+                        </div>
+                        <div class="book-year">&mdash; ${book.publicationYear}</div>
+                        <div class="book-price">Цена: ${book.price} ₽</div>
+                    </div>
+            `;
+          } 
+        }
+
+    </script>
+</head>
+<body onload="showBooks()">
+    <header>
+        НГТУ, ФБ, Лабораторная работа 6
+    </header>
+
+    <main>
+       <h1>Список книг</h1>
+       <div id="bookList">
+       </div>
+    </main>
+
+    <footer>
+        &copy; Ворошилова Елизавета, ФБИ-34, 2 курс, 2025
+    </footer>
+</body>
+</html>
