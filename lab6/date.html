@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дата и Время</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .date-container {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        .locale-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .date-output {
+            margin-top: 5px;
+        }
+    </style>
+    <script>
+        function showDate() {
+            const locales = [
+                {code: 'ru-RU', name: 'Русский (Россия)'},
+                {code: 'en-US', name: 'Английский (США)'},
+                {code: 'de-DE', name: 'Немецкий (Германия)'},
+                {code: 'ja-JP', name: 'Японский (Япония)'},
+                {code: 'ar-EG', name: 'Арабский (Египет)'},
+                {code: 'fr-FR', name: 'Французский (Франция)'}
+            ];
+            
+            const container = document.getElementById('current-date'); // Изменено на current-date
+            
+            locales.forEach(locale => {
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'date-container';
+                
+                dateDiv.innerHTML = `
+                    <div class="locale-name">${locale.name}:</div>
+                    <div class="date-output">${new Date().toLocaleString(locale.code)}</div>
+                `;
+                
+                container.appendChild(dateDiv);
+            });
+        }
+    </script>
+</head>
+<body onload="showDate()">
+    <header>
+         НГТУ, ФБ, Лабораторная работа 6
+         <h1>Дата и время в разных локалях</h1>
+    </header>
+
+    <main>
+      <div id="current-date"></div>
+    </main>
+
+    <footer>
+        &copy; Ворошилова Елизавета, ФБИ-34, 2 курс, 2025
+    </footer>
+</body>
+</html>
