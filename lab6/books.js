@@ -69,5 +69,5 @@ const books = [
         price: 900,
         bestseller: true,
         inStock: true
-    }
+    },
 ];
