@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диаграмма</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
+    <style>
+        #diag {
+            display: flex;
+            align-items: flex-end;
+            height: 300px;
+            gap: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+            background-color: #b6f1f1;
+        }
+        
+        .bar {
+            flex: 1;
+            min-width: 10px; 
+        }
+    </style>
+
+    <script>
+       function showDiagram() {
+            let data = [36, 86, 75, 45, 66, 93, 54, 27, 15, 49];
+            let colors = ['purple', 'blue', '#0a94a6', '#eb0e71',
+             '#f0677e', '#de8e3e', '#f7d96d', '#861bf2', '#861bf2', '#ad0a9a'];
+            let bars = document.getElementsByClassName('bar');
+            const diagWidth = document.getElementById('diag').clientWidth;
+            const maxData = Math.max(...data);
+            for(let i = 0; i < data.length; i++) {
+                let valueElement = document.createElement('div');
+                valueElement.className = 'bar-value';
+                valueElement.textContent = data[i];
+                bars[i].style.height = (data[i] / maxData * 100) + '%';
+                bars[i].style.backgroundColor = colors[i];
+                bars[i].appendChild(valueElement);
+            }
+       } 
+
+    </script>
+</head>
+<body onload="showDiagram()">
+    <header>
+        НГТУ, ФБ, Лабораторная работа 6
+    </header>
+
+    <main>
+       <div id="diag">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+       </div>
+
+    </main>
+
+    <footer>
+        &copy; Ворошилова Елизавета, ФБИ-34, 2 курс, 2025
+    </footer>
+</body>
+</html>
