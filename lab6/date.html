@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="main.css">
     <link rel="shortcut icon" href="favicon-16x16.png">
     <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
-<style>
+ <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
@@ -27,8 +27,43 @@
         .date-output {
             margin-top: 5px;
         }
+        header {
+            transition: color 0.5s ease-in-out;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #stop-btn, #stop-update-btn {
+            background-color: #f44336;
+        }
+        #stop-btn:hover, #stop-update-btn:hover {
+            background-color: #d32f2f;
+        }
     </style>
     <script>
+        let timerNum;
+        let updateTimer;
+        const updateInterval = 1000; // 1 секунда для обновления времени
+        const colorChangeInterval = 2000; // 2 секунды для смены цвета
+
         function showDate() {
             const locales = [
                 {code: 'ru-RU', name: 'Русский (Россия)'},
@@ -39,7 +74,8 @@
                 {code: 'fr-FR', name: 'Французский (Франция)'}
             ];
             
-            const container = document.getElementById('current-date'); // Изменено на current-date
+            const container = document.getElementById('current-date');
+            container.innerHTML = '';
             
             locales.forEach(locale => {
                 const dateDiv = document.createElement('div');
@@ -53,6 +89,38 @@
                 container.appendChild(dateDiv);
             });
         }
+
+        function changeColors() {
+            const header = document.getElementsByTagName('header')[0];
+            const rgb = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+            header.style.color = rgb;
+        }
+        
+        function startChangeColors() {
+            changeColors();
+            timerNum = setInterval(changeColors, colorChangeInterval);
+            document.getElementById('start-btn').disabled = true;
+            document.getElementById('stop-btn').disabled = false;
+        }
+        
+        function stopChangeColors() {
+            clearInterval(timerNum);
+            document.getElementById('start-btn').disabled = false;
+            document.getElementById('stop-btn').disabled = true;
+        }
+        
+        function startUpdatingTime() {
+            showDate();
+            updateTimer = setInterval(showDate, updateInterval);
+            document.getElementById('update-btn').disabled = true;
+            document.getElementById('stop-update-btn').disabled = false;
+        }
+        
+        function stopUpdatingTime() {
+            clearInterval(updateTimer);
+            document.getElementById('update-btn').disabled = false;
+            document.getElementById('stop-update-btn').disabled = true;
+        }
     </script>
 </head>
 <body onload="showDate()">
@@ -63,6 +131,12 @@
 
     <main>
       <div id="current-date"></div>
+      <div class="button-group">
+        <button onclick="startChangeColors()" id="start-btn">Старт смены цвета</button>
+        <button onclick="stopChangeColors()" id="stop-btn" disabled>Стоп смены цвета</button>
+        <button onclick="startUpdatingTime()" id="update-btn">Обновлять время</button>
+        <button onclick="stopUpdatingTime()" id="stop-update-btn" disabled>Остановить обновление</button>
+      </div>
     </main>
 
     <footer>
