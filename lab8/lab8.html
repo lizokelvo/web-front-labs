@@ -35,6 +35,19 @@
                 </li>
             </ul>
             <hr>
+            
+            <div class="card" style="width: 18rem;">
+                <div class="card-body"></div>
+                    <h2 class="card-title">Цветы</h2>
+                    <ul class="card-group">
+                        <li v-for="(flower, id) in flowers" class="list-group-item">
+                            {{ flower }}  <button @click="edit(id, flower)">?</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
 
             <h2>Цветы</h2>
             <table class="table table-danger">
