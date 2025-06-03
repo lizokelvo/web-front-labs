@@ -44,6 +44,9 @@
         .form-control {
             text-align: center;
         }
+        .flower-actions {
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -96,17 +99,29 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="card-title">Цветы (список)</h2>
-                    <ul class="list-group">
+                    <ul class="list-group mb-3">
                         <li v-for="(flower, id) in flowers" class="list-group-item d-flex justify-content-between align-items-center">
                             <span v-if="flower === null" class="text-muted">
                                 <span class="spinner-border spinner-border-sm" role="status"></span> загружается...
                             </span>
                             <span v-else>{{ flower }}</span>
-                            <button @click="edit(id, flower)" class="btn btn-sm btn-outline-primary" :disabled="flower === null">
-                                <i class="bi bi-pencil"></i> Редактировать
-                            </button>
+                            <div class="flower-actions">
+                                <button @click="edit(id, flower)" class="btn btn-sm btn-outline-primary me-1" :disabled="flower === null">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button @click="removeFlower(id)" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
                         </li>
                     </ul>
+                    
+                    <div class="input-group">
+                        <input type="text" v-model="newFlower" class="form-control" placeholder="Введите название цветка" @keyup.enter="addFlower">
+                        <button @click="addFlower" class="btn btn-success" type="button">
+                            <i class="bi bi-plus-lg"></i> Добавить цветок
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -130,23 +145,17 @@
                                     </span>
                                     <span v-else>{{ flower }}</span>
                                 </td>
-                                <td>
-                                    <button @click="edit(id, flower)" class="btn btn-sm btn-primary me-2" :disabled="flower === null">
-                                        <i class="bi bi-pencil"></i>
+                                <td class="flower-actions">
+                                    <button @click="edit(id, flower)" class="btn btn-sm btn-primary me-1" :disabled="flower === null">
+                                        <i class="bi bi-pencil"></i> Изменить
                                     </button>
                                     <button @click="removeFlower(id)" class="btn btn-sm btn-danger">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash"></i> Удалить
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="input-group mb-3">
-                        <input type="text" v-model="newFlower" class="form-control" placeholder="Добавить новый цветок">
-                        <button @click="addFlower" class="btn btn-success" type="button">
-                            <i class="bi bi-plus-lg"></i> Добавить
-                        </button>
-                    </div>
                 </div>
             </div>
 
@@ -233,10 +242,12 @@
                     if (this.newFlower.trim() !== '') {
                         this.flowers.push(this.newFlower);
                         this.newFlower = '';
+                    } else {
+                        alert('Пожалуйста, введите название цветка');
                     }
                 },
                 removeFlower(id) {
-                    if (confirm('Удалить этот цветок?')) {
+                    if (confirm(`Вы уверены, что хотите удалить цветок "${this.flowers[id]}"?`)) {
                         this.flowers.splice(id, 1);
                     }
                 },
