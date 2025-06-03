@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Акции ММК</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
+    <style>
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .stock-table th, .stock-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .stock-table th {
+            background-color: #f2f2f2;
+        }
+        .stock-stats {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #1abc9c;
+        }
+        .stat-value {
+            font-weight: bold;
+            color: #13304c;
+        }
+    </style>
+    <script src="mmk-data.js"></script>
+    <script>
+        function showStocks() {
+            const table = document.getElementById('stock-table');
+            const statsDiv = document.getElementById('stock-stats');
+            table.innerHTML = '<tr><th>Дата</th><th>Цена (руб.)</th></tr>';
+            mmkStocks.forEach(stock => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${stock.date}</td>
+                    <td>${stock.price.toFixed(2)}</td>
+                `;
+                table.appendChild(row);
+            });
+
+            const prices = mmkStocks.map(stock => stock.price);
+            const sum = prices.reduce((total, price) => total + price, 0);
+            const average = sum / prices.length;
+            const minPrice = Math.min(...prices);
+            const maxPrice = Math.max(...prices);
+
+            statsDiv.innerHTML = `
+                <h3>Статистика по котировкам</h3>
+                <p>Средняя стоимость акции: <span class="stat-value">${average.toFixed(2)} руб.</span></p>
+                <p>Минимальная стоимость: <span class="stat-value">${minPrice.toFixed(2)} руб.</span> 
+                (${mmkStocks.find(stock => stock.price === minPrice).date})</p>
+                <p>Максимальная стоимость: <span class="stat-value">${maxPrice.toFixed(2)} руб.</span>
+                (${mmkStocks.find(stock => stock.price === maxPrice).date})</p>
+            `;
+
+            document.querySelector('button').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <header>
+        Акции ММК, Лабораторная работа 7
+    </header>
+
+    <main>
+        <h1>Котировки акций ПАО "ММК"</h1>
+        <p>Обыкновенные акции (тикер: MAGN)</p>
+        <button onclick="showStocks()">Показать котировки</button>
+        <table class="stock-table" id="stock-table"></table>
+        <div class="stock-stats" id="stock-stats"></div>
+    </main>
+
+    <footer>
+        &copy; Ворошилова Елизавета, ФБИ-34, 2 курс, 2025
+    </footer>
+</body>
+</html>
