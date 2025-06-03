@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Курс евро</title>
+    <style>
+        .rate-container {
+            border: 2px solid #005b96;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f0f8ff;
+        }
+        .rate-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #005b96;
+        }
+        .rate-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e6f2ff;
+            border-radius: 5px;
+        }
+        .difference {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .up {
+            color: #2e7d32;
+        }
+        .down {
+            color: #c62828;
+        }
+        button {
+            background-color: #005b96;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            color: #666;
+        }
+        
+    </style>
+
+    <script>
+        function showExchangeRate() {
+            const url = 'https://www.cbr-xml-daily.ru/daily_json.js'
+            fetch(url)
+                .then(function(response) {
+                    return response.json();
+                }) 
+                .then(function(json) {
+                    const eur = json.Valute.EUR;
+                    const currentRate = eur.Value.toFixed(2);
+                    const previousRate = eur.Previous.toFixed(2);
+                    const difference = (eur.Value - eur.Previous).toFixed(2);
+                    
+                    document.getElementById('current-rate').textContent = `${currentRate} ₽`;
+                    document.getElementById('request-date').textContent = `Дата запроса: ${new Date(json.Date).toLocaleDateString()}`;
+                    document.getElementById('previous-rate').textContent = `Курс на предыдущую дату: ${previousRate} ₽`;
+                    
+                    const differenceElement = document.getElementById('rate-difference');
+                    if (difference > 0) {
+                        differenceElement.textContent = `Курс вырос на ${difference} ₽`;
+                        differenceElement.className = 'difference up';
+                    } else if (difference < 0) {
+                        differenceElement.textContent = `Курс снизился на ${Math.abs(difference)} ₽`;
+                        differenceElement.className = 'difference down';
+                    } else {
+                        differenceElement.textContent = `Курс не изменился`;
+                        differenceElement.className = 'difference';
+                    }
+                    
+                    document.getElementById('rate-container').style.display = 'block';
+                })
+                .catch(function(error) {
+                    alert('Произошла ошибка при получении данных: ' + error.message);
+                });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        Курс евро, Лабораторная работа 7
+    </header>
+
+    <main>
+        <button onclick="showExchangeRate()">Получить курс евро</button>
+        <div id="rate-container" class="rate-container" style="display: none;">
+            <h2>Курс евро к рублю</h2>
+            <div class="rate-value" id="current-rate"></div>
+            <div class="rate-info">
+                <div id="request-date"></div>
+                <div id="previous-rate"></div>
+                <div id="rate-difference" class="difference"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; Ворошилова Елизавета, ФБИ-34, 2 курс, 2025
+    </footer>
+
+</body>
+</html>
