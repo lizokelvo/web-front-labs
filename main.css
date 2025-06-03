@@ -13,6 +13,7 @@ a {
 a:hover {
     color: rgb(88, 29, 29);
     text-decoration: underline;
+    transition: 0.3s;
 }
 
 a :active {
