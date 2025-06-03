@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды в Новосибирске</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #4a7c59;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .weather-container {
+            border: 2px solid #4a7c59;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f0f7f4;
+        }
+        .weather-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .weather-date {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4a7c59;
+        }
+        .weather-city {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .weather-data {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .weather-item {
+            text-align: center;
+            padding: 15px;
+            margin: 10px;
+            background-color: #e0ece4;
+            border-radius: 5px;
+            min-width: 100px;
+        }
+        .weather-time {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .weather-temp {
+            font-size: 24px;
+            color: #4a7c59;
+            font-weight: bold;
+        }
+        button {
+            background-color: #4a7c59;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3a6148;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            color: #666;
+        }
+        .source-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .source-link a {
+            color: #4a7c59;
+            text-decoration: none;
+        }
+        .source-link a:hover {
+            text-decoration: underline;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+    <script>
+        function getWeather() {
+            const loading = document.getElementById('loading');
+            const weatherContainer = document.getElementById('weather-container');
+
+            loading.style.display = 'block';
+            weatherContainer.style.display = 'none';
+
+            const latitude = 55.0415;
+            const longitude = 82.9346;
+
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&timezone=Asia%2FBangkok`;
+            
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка сети');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    processWeatherData(data);
+
+                    loading.style.display = 'none';
+                    weatherContainer.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    loading.style.display = 'none';
+                    alert('Произошла ошибка при получении данных о погоде: ' + error.message);
+                });
+        }
+        
+        function processWeatherData(data) {
+            const times = data.hourly.time;
+            const temperatures = data.hourly.temperature_2m;
+            const today = new Date().toISOString().split('T')[0];
+            const targetTimes = [
+                `${today}T08:00`, 
+                `${today}T12:00`, 
+                `${today}T20:00`  
+            ];
+            
+            document.getElementById('weather-date').textContent = new Date(today).toLocaleDateString('ru-RU', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const weatherData = document.getElementById('weather-data');
+            weatherData.innerHTML = '';
+
+            targetTimes.forEach(targetTime => {
+                const index = times.indexOf(targetTime);
+                if (index !== -1) {
+                    const time = targetTime.split('T')[1].substring(0, 5);
+                    const temp = temperatures[index];
+
+                    const item = document.createElement('div');
+                    item.className = 'weather-item';
+                    item.innerHTML = `
+                        <div class="weather-time">${time}</div>
+                        <div class="weather-temp">${temp}°C</div>
+                    `;
+                    
+                    weatherData.appendChild(item);
+                }
+            });
+
+            if (weatherData.children.length === 0) {
+                weatherData.innerHTML = '<div>Данные о погоде на сегодня недоступны</div>';
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        Прогноз погоды в Новосибирске
+    </header>
+
+    <main>
+        <button onclick="getWeather()">Получить прогноз погоды</button>
+        <div id="loading" class="loading">Загрузка данных...</div>
+        
+        <div id="weather-container" class="weather-container" style="display: none;">
+            <div class="weather-header">
+                <div class="weather-city">Новосибирск</div>
+                <div class="weather-date" id="weather-date"></div>
+            </div>
+            <div class="weather-data" id="weather-data">
+            </div>
+        </div>
+        
+        <div class="source-link">
+            Данные предоставлены <a href="https://open-meteo.com/" target="_blank">Open-Meteo</a>.
+            Подробнее о API можно узнать на <a href="https://open-meteo.com/en/docs" target="_blank">странице документации</a>.
+        </div>
+    </main>
+
+    <footer>
+        &copy; Ворошилова Елизавета, ФБИ-34, 2 курс, 2025
+    </footer>
+
+</body>
+</html>
