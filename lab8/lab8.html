@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ворошилова Елизавета Андреевна. Лабораторная работа 8</title>
-    <link rel="stylesheet" href="web-front-labs/main.css">
-    <link rel="shortcut icon" href="web-front-labs/favicon-16x16.png">
-    <link rel="shortcut icon" href="web-front-labs/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
@@ -35,9 +35,9 @@
             </ul>
             <hr>
             <h2>Калькулятор</h2>
-            <input v-model="a">
+            <input type="number" v-model="a">
             +
-            <input v-model="b">
+            <input type="number" v-model="b">
             <button @click="sum">=</button>
             <span>{{ result }}</span>
         </div>
